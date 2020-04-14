@@ -118,20 +118,20 @@ func (c *cache) Replace(k string, x interface{}, d time.Duration) error {
 // Get an item from the cache. Returns the item or nil, and a bool indicating
 // whether the key was found.
 func (c *cache) Get(k string) (interface{}, bool) {
-	c.mu.RLock()
+	//c.mu.RLock()
 	// "Inlining" of get and Expired
 	item, found := c.items[k]
 	if !found {
-		c.mu.RUnlock()
+		//c.mu.RUnlock()
 		return nil, false
 	}
 	if item.Expiration > 0 {
 		if time.Now().UnixNano() > item.Expiration {
-			c.mu.RUnlock()
+			//c.mu.RUnlock()
 			return nil, false
 		}
 	}
-	c.mu.RUnlock()
+	//c.mu.RUnlock()
 	return item.Object, true
 }
 
